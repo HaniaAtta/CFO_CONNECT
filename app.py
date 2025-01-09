@@ -1,7 +1,3 @@
-pip install langchain_community langchain_huggingface gradio PyPDF2
-!pip install faiss-cpu
-!pip install --upgrade gradio
-
 import gradio as gr
 from langchain.prompts import PromptTemplate
 from langchain_community.vectorstores import FAISS
@@ -10,14 +6,12 @@ from PyPDF2 import PdfReader
 from groq import Groq
 import faiss
 import os
-import time
+
 # Adjust the paths to your uploaded PDF files
 pdf_paths = [
-    "/content/drive/MyDrive/Colab Notebooks/financepdf.pdf",
-    "/content/drive/MyDrive/Colab Notebooks/FINANCIAL REGULATIONS.pdf",
-    "/content/drive/MyDrive/Colab Notebooks/INTERNATIONAL FINANCIAL REPORTING STANDARDS (UPDATED).docx.pdf"
-
-    # Add more paths here as needed
+    "path/to/your/financepdf.pdf",
+    "path/to/your/FINANCIAL REGULATIONS.pdf",
+    "path/to/your/INTERNATIONAL FINANCIAL REPORTING STANDARDS (UPDATED).docx.pdf"
 ]
 
 # Load PDF files and extract text
@@ -49,18 +43,18 @@ prompt = """
 You are a chatbot designed to answer questions about the Financials:
 {retrieved_data}
 
-User Query: {user_query}
+User  Query: {user_query}
 """
 
 # Initialize Groq API client
-client = Groq(api_key="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")
+client = Groq(api_key="your_api_key_here")
 
 def process_query(user_query):
     try:
         if not user_query.strip():
             return "Please enter a valid question."
 
-        print(f"User Query: {user_query}")
+        print(f"User  Query: {user_query}")
 
         # Retrieve relevant documents from FAISS vector store
         retrieved_docs = vector_store.similarity_search(user_query, k=3)
@@ -101,29 +95,10 @@ def process_query(user_query):
 
     except Exception as e:
         return f"An error occurred: {str(e)}"
-# custom_css = """
-# .gradio-container {
-#     background-color: #ffffff;  /* Light background */
-#     color: #000000;             /* Dark text */
-# }
-# .gr.Markdown{
-#   color:black;
-# }
-# h1{
-#   color: black;}
-# .gradio-button {
-#     background-color: #4CAF50;  /* Green background for buttons */
-#     color: white;               /* White text */
-# }
 
-# .gradio-input {
-#     background-color: #f0f0f0;  /* Light gray background for input */
-# }
-# """
 # Gradio app
-
-with gr.Blocks("Light") as app:
-    gr.Markdown("""<h1>Financial Chatbot</h1>
+with gr.Blocks() as app:
+    gr.Markdown("""<h1>Financial Chatbot </h1>
     Use this chatbot to ask questions related to finance.
     """)
 
@@ -151,4 +126,3 @@ with gr.Blocks("Light") as app:
 
 # Launch Gradio interface
 app.launch()
-
