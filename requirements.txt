@@ -1,5 +1,8 @@
-gradio
-langchain-community
-langchain-huggingface
-PyPDF2
-faiss-cpu
+gradio==3.0.0
+langchain==0.0.1
+langchain-community==0.0.1
+langchain-huggingface==0.0.1
+PyPDF2==1.26.0
+groq==0.0.1
+faiss-cpu==1.7.1
+sentence-transformers==2.2.2  # Required for HuggingFaceEmbeddings
