@@ -9,9 +9,8 @@ import os
 import time
 # Adjust the paths to your uploaded PDF files
 pdf_paths = [
-    "/data/financepdf.pdf",
-    "/dataFINANCIAL REGULATIONS.pdf",
-    "dataINTERNATIONAL FINANCIAL REPORTING STANDARDS (UPDATED).docx.pdf"
+   
+    "/dataFINANCIAL REGULATIONS.pdf"
 
     # Add more paths here as needed
 ]
