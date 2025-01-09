@@ -6,12 +6,14 @@ from PyPDF2 import PdfReader
 from groq import Groq
 import faiss
 import os
-
+import time
 # Adjust the paths to your uploaded PDF files
 pdf_paths = [
-    "path/to/your/financepdf.pdf",
-    "path/to/your/FINANCIAL REGULATIONS.pdf",
-    "path/to/your/INTERNATIONAL FINANCIAL REPORTING STANDARDS (UPDATED).docx.pdf"
+    "/data/financepdf.pdf",
+    "/dataFINANCIAL REGULATIONS.pdf",
+    "dataINTERNATIONAL FINANCIAL REPORTING STANDARDS (UPDATED).docx.pdf"
+
+    # Add more paths here as needed
 ]
 
 # Load PDF files and extract text
@@ -43,24 +45,24 @@ prompt = """
 You are a chatbot designed to answer questions about the Financials:
 {retrieved_data}
 
-User  Query: {user_query}
+User Query: {user_query}
 """
 
 # Initialize Groq API client
-client = Groq(api_key="your_api_key_here")
+client = Groq(api_key="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")
 
 def process_query(user_query):
     try:
         if not user_query.strip():
             return "Please enter a valid question."
 
-        print(f"User  Query: {user_query}")
+        print(f"User Query: {user_query}")
 
         # Retrieve relevant documents from FAISS vector store
         retrieved_docs = vector_store.similarity_search(user_query, k=3)
 
         if not retrieved_docs:
-            return "No relevant information found in the data, I have."
+            return "No relevant information found in the data I have."
 
         retrieved_data = "\n".join([doc.page_content for doc in retrieved_docs])
 
@@ -97,8 +99,9 @@ def process_query(user_query):
         return f"An error occurred: {str(e)}"
 
 # Gradio app
-with gr.Blocks() as app:
-    gr.Markdown("""<h1>Financial Chatbot </h1>
+
+with gr.Blocks("Light") as app:
+    gr.Markdown("""<h1>Financial Chatbot</h1>
     Use this chatbot to ask questions related to finance.
     """)
 
